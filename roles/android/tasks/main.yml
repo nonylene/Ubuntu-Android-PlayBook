@@ -1,0 +1,20 @@
+---
+- name: Install android dependencies
+  apt: name={{item}} state=present
+  with_items:
+    - lib32stdc++6
+    - lib32z1
+
+- name: Download android sdk
+  get_url: >
+    url=https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
+    dest=/home/nonylene/android-sdk_r24.4.1-linux.tgz
+  register: download_sdk
+  sudo_user: nonylene
+
+- name: Unarchive andorid sdk tools
+  unarchive: src={{ download_sdk.dest }} dest=/home/nonylene/ copy=no
+  sudo_user: nonylene
+
+- name: Andorid env
+  copy: src=android.sh dest=/etc/profile.d/android.sh

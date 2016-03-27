@@ -1,0 +1,13 @@
+---
+- hosts: server
+  sudo: yes
+  roles:
+    - role: java8
+      tags:
+        - java8
+    - role: utils
+      tags:
+        - utils
+    - role: android
+      tags:
+        - android

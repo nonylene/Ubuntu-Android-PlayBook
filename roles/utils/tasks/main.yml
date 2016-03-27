@@ -1,0 +1,24 @@
+---
+- name: Install utils
+  apt: name={{item}} state=present
+  with_items:
+    - git
+    - zsh
+    - tmux
+    - vim
+
+- name: Change shell zsh
+  user: name=nonylene shell=/bin/zsh
+
+- name: Install dotfiles
+  sudo_user: nonylene
+  git: repo=https://github.com/nonylene/dotfiles.git dest=/home/nonylene/dotfiles
+
+- name: Deploy dotfiles
+  sudo_user: nonylene
+  command: bash /home/nonylene/dotfiles/build.sh
+
+# init -> pass error
+- name: Install NeoBundle
+  sudo_user: nonylene
+  shell: echo y | vim +NeoBundleInstall +qall
